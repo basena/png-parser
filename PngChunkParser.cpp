@@ -13,9 +13,9 @@ void PngChunkParser::readFile(const char* fname) {
 			std::cout << "end of file" << std::endl;
 		}
 		else std::cout << "invalid PNG signature at start of file" << std::endl;		
+	fclose(infile);
 	}
 	else std::cout << "could not open file" << std::endl;
-	fclose(infile);
 }
 
 // recursively reads chunks until IEND chunk
