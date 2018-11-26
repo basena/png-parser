@@ -72,7 +72,7 @@ void PngChunkParser::saveData(std::string keystr, std::string valstr) {
 	std::cout << keystr << ": " << valstr << std::endl;
 	if (keystr == "TimestampString") {
 		pngData.timestamp = valstr;
-	} else if (keystr == "Seconds: ") {
+	} else if (keystr == "Seconds") {
 		pngData.seconds = std::stof(valstr);
 	} else if (keystr == "Position") {
 		saveFloat3(pngData.position, valstr);	
@@ -85,10 +85,11 @@ void PngChunkParser::saveData(std::string keystr, std::string valstr) {
 }
 
 void PngChunkParser::saveFloat3(float dest_float[3], std::string str) {
-	std::string::size_type sz;
-	dest_float[0] = std::stof(str.substr(1), &sz); // skip opening parenthesis
-	dest_float[1] = std::stof(str.substr(sz+2), &sz); // start at end of previous read and skip ", " (2 characters)
-	dest_float[2] = std::stof(str.substr(sz+2), &sz);
+	std::string::size_type sz1;
+	std::string::size_type sz2;
+	dest_float[0] = std::stof(str.substr(1), &sz1); // skip opening parenthesis
+	dest_float[1] = std::stof(str.substr(1+sz1+1), &sz2); // start at end of previous read and skip ","
+	dest_float[2] = std::stof(str.substr(1+sz1+1+sz2+1));
 	return;
 }
 
